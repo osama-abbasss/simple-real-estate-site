@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ property.name}}
+{% endblock %}
+
+{% block exstra_style %}
+<style media="screen">
+.table>tbody>tr>td, .table>tbody>tr>th {
+  padding: 15px;
+  line-height: 2.428571;
+  vertical-align: top;
+  border-top: 1px solid #c11111;
+}
+
+
+.table>tbody>tr>td{
+  text-align: end;
+}
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+<div class="container" style="position: relative; top: 110px;">
+
+      <img src="{{property.image.url}}" class="img-fluid" alt="Responsive image">
+        <div class="mt-2">
+          <table class="table table-dark">
+            <tbody>
+
+              <tr>
+                <th scope="row" colspan="4">name</th>
+
+                <td scope="row">{{property.name}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">location</th>
+
+                <td scope="row">{{property.location}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">governorate</th>
+
+                <td scope="row">{{property.governorate}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">city</th>
+
+                <td scope="row">{{property.city}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">area</th>
+
+                <td scope="row">{{property.area}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">price</th>
+
+                <td scope="row">£ {{property.price}} {% if property.type == "rent" %} /Month{% endif %}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">type</th>
+                <td scope="row">{{property.type}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">allowed installment</th>
+                {% if property.installment %}
+                  <td scope="row">yes</td>
+                {% else %}
+                  <td scope="row">no</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">beds_room_number</th>
+                <td  scope="row">{{property.beds_room_number}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">baths_number</th>
+                <td scope="row">{{property.baths_number}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">garages_number</th>
+                <td scope="row">{{property.garages_number}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">floor_number</th>
+                <td scope="row">{{property.floor_number}}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" colspan="4">floor_number</th>
+                <td scope="row">{{property.description|safe}}</td>
+              </tr>
+
+
+            </tbody>
+          </table>
+
+
+
+        </div>
+      </div>
+
+
+{% endblock %}

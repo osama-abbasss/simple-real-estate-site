@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Agents{% endblock %}
+
+{% block content %}
+
+  <section class="probootstrap-slider flexslider2 page-inner">
+    <div class="overlay"></div>
+    <div class="probootstrap-wrap-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+
+            <div class="page-title probootstrap-animate">
+              <div class="probootstrap-breadcrumbs">
+                <a href="/">Home</a><span>Agents</span>
+              </div>
+              <h1>Agents</h1>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="slides">
+      <li style="background-image: url(img/slider_1.jpg);"></li>
+      <li style="background-image: url(img/slider_4.jpg);"></li>
+      <li style="background-image: url(img/slider_2.jpg);"></li>
+    </ul>
+  </section>
+  <!-- END: slider  -->
+
+  <section class="probootstrap-section probootstrap-section-lighter">
+    <div class="container">
+      <div class="row heading">
+        <h2 class="mt0 mb50 text-center">Our Agents</h2>
+      </div>
+      <div class="row">
+        {% for agent in agent_list %}
+
+          <div class="col-md-3 col-sm-6">
+            <div class="probootstrap-card probootstrap-person text-left">
+            {% if agent.image %}
+              <div class="probootstrap-card-media">
+                <img src="{{agent.image.url}}" class="img-responsive" alt="Free HTML5 Template by uicookies.com">
+              </div>
+            {% else %}
+              <div class="probootstrap-card-media">
+                <img src="{% static "img/person_1.jpg" %}" class="img-responsive" alt="Free HTML5 Template by uicookies.com">
+              </div>
+            {% endif %}
+            <div class="probootstrap-card-text">
+              <h2 class="probootstrap-card-heading mb0">{{agent.name}}</h2>
+              <p><small>{{agent.title}}</small></p>
+              <p><a href="{% url 'agents:agent_detail' agent.slug %}">View Details</a></p>
+            </div>
+          </div>
+          </div>
+
+        {% endfor %}
+
+      </div>
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center middle">
+          {% if agent_list.has_previous %}
+          <li class="page-item ">
+            <a class="page-link" href="?page={{ agent_list.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+          {% endif %}
+          <li class="page-item"><a class="page-link" href="#">{{ agent_list.number }} of {{ agent_list.paginator.num_pages }}</a></li>
+
+          {% if agent_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ agent_list.next_page_number }}">Next</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          {% endif %}
+        </ul>
+    </nav>
+    </div>
+
+  </section>
+
+  <section class="probootstrap-half reverse">
+    {% if blog.image  %}
+    <div class="image-wrap">
+      <div class="image" style="background-image: url({{blog.image.url}});"></div>
+    </div>
+    {% else %}
+      <div class="image-wrap">
+        <div class="image" style="background-image: url(img/slider_5.jpg);"></div>
+      </div>
+    {% endif %}
+    <div class="text">
+      <p class="mb10 subtitle">{{blog.sub_title}}</p>
+      <h3 class="mt0 mb40">{{blog.title}}</h3>
+      <p>{{blog.content|safe}}</p>
+
+      <p><a href="{% url 'about:blog_detail' blog.slug %}" class="btn btn-primary mb10">Find out more</a></p>
+    </div>
+  </section>
+{% include '_footer.html' %}
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} About Us {% endblock %}
+
+{% block content %}
+
+
+  <section class="probootstrap-slider flexslider2 page-inner">
+    <div class="overlay"></div>
+    <div class="probootstrap-wrap-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+
+            <div class="page-title probootstrap-animate">
+              <div class="probootstrap-breadcrumbs">
+                <a href="/">Home</a><span>About</span>
+              </div>
+              <h1>About Us</h1>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="slides">
+      <li style="background-image: url(img/slider_1.jpg);"></li>
+      <li style="background-image: url(img/slider_4.jpg);"></li>
+      <li style="background-image: url(img/slider_2.jpg);"></li>
+    </ul>
+  </section>
+  <!-- END: slider  -->
+
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row heading">
+        <div class="col-md-12"><h2 class="mt0 mb50 text-center">Our Company</h2></div>
+      </div>
+      <div class="row">
+        {% if about.image %}
+          <div class="col-md-12">
+            <p><img src="{{about.image.url}}" class="img-responsive" alt="Free Bootstrap Template by uicookies.com"></p>
+          </div>
+        {% else %}
+          <div class="col-md-12">
+            <p><img src="{% static "img/slider_5.jpg" %}" class="img-responsive" alt="Free Bootstrap Template by uicookies.com"></p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Our Mission</h2>
+          <p>{{about.mission|safe}}</p>
+        </div>
+        <div class="col-md-6">
+          <h2>Our Vision</h2>
+          <p>{{about.vision|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% for blog in blogs_list %}
+  {% if blog.active %}
+    <section class="probootstrap-half">
+      {% if blog.image %}
+        <div class="image-wrap">
+          <div class="image" style="background-image: url({{blog.image.url}});"></div>
+        </div>
+      {% else %}
+        <div class="image-wrap">
+          <div class="image" style="background-image: url({{blog.image.url}});"></div>
+        </div>
+      {% endif %}
+      <div class="text">
+        <p class="mb10 subtitle">{{blog.sub_title}}</p>
+        <h3 class="mt0 mb40">{{blog.title}}</h3>
+
+        <p>{{blog.content|safe|truncatewords:50}}</p>
+
+        <p><a href="{% url 'about:blog_detail' blog.slug %}" class="btn btn-primary mb10">Find out more</a></p>
+      </div>
+    </section>
+    <hr>
+  {% endif %}
+{% endfor %}
+<!--
+  <section class="probootstrap-half reverse">
+    <div class="image-wrap">
+      <div class="image" style="background-image: url(img/slider_5.jpg);"></div>
+    </div>
+    <div class="text">
+      <p class="mb10 subtitle">Why Choose Us</p>
+      <h3 class="mt0 mb40">You Will Love Our Services</h3>
+      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+      <p class="mb50">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+      <p><a href="#" class="btn btn-primary mb10">Find out more</a></p>
+    </div>
+  </section>
+-->
+  </section>
+
+  <section class="probootstrap-section probootstrap-section-lighter">
+    <div class="container">
+      <div class="row heading">
+        <h2 class="mt0 mb50 text-center">Our Agents</h2>
+      </div>
+      <div class="row">
+        {% for agent in agents %}
+
+        <div class="col-md-3 col-sm-6">
+          <div class="probootstrap-card probootstrap-person text-left">
+          {% if agent.image %}
+            <div class="probootstrap-card-media">
+              <img src="{{agent.image.url}}" class="img-responsive" alt="Free HTML5 Template by uicookies.com">
+            </div>
+          {% else %}
+            <div class="probootstrap-card-media">
+              <img src="{% static "img/person_1.jpg" %}" class="img-responsive" alt="Free HTML5 Template by uicookies.com">
+            </div>
+          {% endif %}
+          <div class="probootstrap-card-text">
+            <h2 class="probootstrap-card-heading mb0">{{agent.name}}</h2>
+            <p><small>{{agent.title}}</small></p>
+            <p><a href="{% url 'agents:agent_detail' agent.slug %}">View Details</a></p>
+          </div>
+        </div>
+        </div>
+
+        {% endfor %}
+      </div>
+      <a href="{% url 'agents:agents' %}" type="button" class="btn btn-primary middle">
+        More
+      </a>
+    </div>
+  </section>
+
+
+{% include '_footer.html' %}
+{% endblock %}

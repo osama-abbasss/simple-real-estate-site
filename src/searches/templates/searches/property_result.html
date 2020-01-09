@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Properties{% endblock %}
+
+{% block content %}
+
+{% if properties_query%}
+  <section class="probootstrap-slider flexslider2 page-inner">
+    <div class="overlay"></div>
+    <div class="probootstrap-wrap-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+
+            <div class="page-title probootstrap-animate">
+              <div class="probootstrap-breadcrumbs">
+                <a href="/">Home</a><span>Searches</span>
+              </div>
+              <h1>Searches</h1>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="slides">
+      <li style="background-image: url(img/slider_1.jpg);"></li>
+      <li style="background-image: url(img/slider_4.jpg);"></li>
+      <li style="background-image: url(img/slider_2.jpg);"></li>
+    </ul>
+  </section>
+  <section class="probootstrap-section probootstrap-section-lighter">
+      <div class="container">
+        <div class="row">
+          {% for property in properties_query %}
+          <div class="col-md-4 col-sm-6">
+            <div class="probootstrap-card probootstrap-listing" style="height:550px">
+              {% if property.image %}
+                <div class="probootstrap-card-media">
+                  <img src="{{property.image.url}}" class="img-responsive" alt="Free HTML5 Template by uicookies.com"
+                  style="height: 283px; position: relative; width: 100%;">
+                  <a href="#" class="probootstrap-love"><i class="icon-heart"></i></a>
+                </div>
+              {% else %}
+                <div class="probootstrap-card-media">
+                  <img src="{% static "img/slider_1.jpg" %}" class="img-responsive" alt="Free HTML5 Template by uicookies.com">
+                  <a href="#" class="probootstrap-love"><i class="icon-heart"></i></a>
+                </div>
+              {% endif %}
+              <div class="probootstrap-card-text">
+                <h2 class="probootstrap-card-heading"><a href="{% url 'properties:property_detail' property.slug %}">{{property.name}}</a></h2>
+                <div class="probootstrap-listing-location">
+                  <i class="icon-location2"></i> <span>{{property.governorate.governorate_name}}, {{property.city}}</span>
+                </div>
+                {% if property.type == 'sale' %}
+                  <div class="probootstrap-listing-category for-sale"><span>for sale</span></div>
+                {% else %}
+                  <div class="probootstrap-listing-category for-rent"><span>for rent</span></div>
+                {% endif %}
+
+                <div class="probootstrap-listing-price"><strong>£ {{property.price}}</strong>{% if property.type == 'rent' %} / month{% endif %}</div>
+              </div>
+              <div class="probootstrap-card-extra">
+                <ul>
+                  <li>
+                    Area
+                    <span>{{property.area}} m2</span>
+                  </li>
+                  <li>
+                    Beds
+                    <span>{{property.beds_room_number}}</span>
+                  </li>
+                  <li>
+                    Baths room
+                    <span>{{property.baths_number}}</span>
+                  </li>
+                  <li>
+                    Garages
+                    <span>{{property.garages_number}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center middle">
+              {% if properties_query.has_previous %}
+              <li class="page-item ">
+                <a class="page-link" href="?page={{ properties_query.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+              {% endif %}
+              <li class="page-item"><a class="page-link" href="?page={{properties_query.number}}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ properties_query.number }} of {{ properties_query.paginator.num_pages }}</a></li>
+
+              {% if properties_query.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ properties_query.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              {% endif %}
+            </ul>
+        </nav>
+      </div>
+    </section>
+
+{% else %}
+
+<section class="probootstrap-slider flexslider">
+  <div class="probootstrap-wrap-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+          <div class="probootstrap-home-search probootstrap-animate">
+            <form action="/" method="get">
+              <h2 class="heading">Search your next dream home here</h2>
+              <div class="probootstrap-field-group">
+                <div class="probootstrap-fields">
+
+                  <div class="search-field" style="width:100%">
+                    <i class="icon-location2"></i>
+                    <input type="text" class="form-control" placeholder="Home name, governorate or City" name='q'>
+                  </div>
+                </div>
+                <button class="btn btn-success" type="submit"><i class="icon-magnifying-glass t2"></i> Start Search</button>
+              </div>
+            </form>
+            <p class="mb0 text-left"><small>A free HTML5 template by <a href="https://uicookies.com/">uicookies.com</a> under license <a href="https://uicookies.com/license">Creative Commons 3.0</a></small> </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="slides">
+    <li style="background-image: url({% static 'img/1.jpg' %});" class="overlay"></li>
+    <li style="background-image: url({% static 'img/4.jpg' %});" class="overlay"></li>
+    <li style="background-image: url({% static 'img/2.jpg' %});" class="overlay"></li>
+  </ul>
+</section>
+{% endif %}
+
+{% include "_footer.html" %}
+
+{% endblock %}

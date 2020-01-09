@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{blogs.sub_title}} {% endblock %}
+
+{% block content %}
+
+
+
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row">
+        {% if blogs.image %}
+          <div class="col-md-12">
+            <p><img src="{{blogs.image.url}}" class="img-responsive" alt="Free Bootstrap Template by uicookies.com"></p>
+          </div>
+        {% else %}
+          <div class="col-md-12">
+            <p><img src="{% static "img/slider_5.jpg" %}" class="img-responsive" alt="Free Bootstrap Template by uicookies.com"></p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2>{{blogs.title}}</h2>
+          <time>{{blogs.created_at|date:'d  N  o - g:i:s A'}}</time>
+          <hr>
+          <p>{{blogs.content|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  </section>
+
+
+
+{% include '_footer.html' %}
+{% endblock %}
